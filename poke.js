@@ -72,10 +72,52 @@ document.addEventListener("DOMContentLoaded", () => {
     // Start the text typing animation 1 second after page load
     setTimeout(typeWriter, 1000);
 
-    // --- BUTTON CONTROLS ---
+    // --- BUTTON CONTROLS & INSTAGRAM AUDIO FIX ---
     const bgMusic = document.getElementById("bgMusic");
     const musicBtn = document.getElementById("musicBtn");
     const runBtn = document.getElementById("runBtn");
+
+    // 1. Attempt to play the music immediately
+    let playPromise = bgMusic.play();
+
+    // 2. Check if the browser (Instagram/Safari) blocked the music
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            // Success! The music is playing normally.
+            musicBtn.textContent = "MUSIC: ON";
+        }).catch(error => {
+            // BLOCKED! Instagram stopped the audio. 
+            // We must create a "Tap to Start" screen to unlock the audio.
+            musicBtn.textContent = "MUSIC: OFF";
+            
+            const startScreen = document.createElement('div');
+            startScreen.style.position = 'fixed';
+            startScreen.style.top = '0';
+            startScreen.style.left = '0';
+            startScreen.style.width = '100vw';
+            startScreen.style.height = '100vh';
+            startScreen.style.backgroundColor = 'rgba(0,0,0,0.85)';
+            startScreen.style.color = '#FFFFFF';
+            startScreen.style.display = 'flex';
+            startScreen.style.justifyContent = 'center';
+            startScreen.style.alignItems = 'center';
+            startScreen.style.fontSize = '32px';
+            startScreen.style.fontFamily = "'VT323', monospace";
+            startScreen.style.zIndex = '9999';
+            startScreen.style.cursor = 'pointer';
+            startScreen.style.letterSpacing = '2px';
+            startScreen.innerText = "TAP ANYWHERE TO START";
+            
+            document.body.appendChild(startScreen);
+
+            // 3. When they tap the screen, unlock audio and hide the screen
+            startScreen.addEventListener('click', () => {
+                bgMusic.play();
+                musicBtn.textContent = "MUSIC: ON";
+                startScreen.remove(); // Delete the black screen
+            });
+        });
+    }
 
     musicBtn.addEventListener('click', function() {
         if (bgMusic.paused) {
