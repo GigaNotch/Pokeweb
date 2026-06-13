@@ -189,14 +189,26 @@
     <button class="pixel-enter-button" id="enterBtn">Click to Enter</button>
 
     <script>
-        document.getElementById('enterBtn').addEventListener('click', function() {
-            if (navigator.vibrate) {
-                navigator.vibrate(50);
-            }
-            setTimeout(() => {
-                window.location.href = 'poke.html';
-            }, 250); 
-        });
+const enterBtn = document.getElementById('enterBtn');
+const bgMusic = document.getElementById('bgMusic');
+
+enterBtn.addEventListener('click', function() {
+    // 1. NEW FEATURE: Play the background music
+    bgMusic.play().catch((error) => {
+        console.log("Audio play failed:", error);
+    });
+
+    // 2. EXISTING FEATURE: Vibrate the device
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
+    }
+
+    // 3. EXISTING FEATURE: Redirect after 250ms 
+    // (WARNING: If this triggers a page load, the music will instantly stop)
+    setTimeout(() => {
+        window.location.href = 'poke.html';
+    }, 250); 
+});
     </script>
 
 </body>
