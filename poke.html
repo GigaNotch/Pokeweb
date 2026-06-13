@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Wild Pokemon Appeared!</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="poke.css">
+</head>
+<body>
+    
+    <audio id="bgMusic" loop autoplay>
+        <source src="backSong/WhatsApp Audio 2026-06-13 at 2.27.04 PM.mp3#t=02:40" type="audio/mpeg">
+    </audio>
+
+    <div class="gba-screen">
+        
+        <div class="battle-arena">
+            
+            <div id="center-summon-container" class="center-summon-container"></div>
+            
+            <div class="enemy-hud slide-in-left">
+                <div class="hud-header">
+                    <span class="pokemon-name" id="hudName">DITTO</span>
+                    <span class="pokemon-level">Lv25</span>
+                </div>
+                <div class="hp-bar-container">
+                    <span class="hp-label">HP</span>
+                    <div class="hp-track">
+                        <div class="hp-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sprite-container slide-in-right">
+                <img src="Gif/pokeball-png-45331.png" alt="Wild Ditto" class="enemy-sprite">
+            </div>
+            
+            <div class="player-base slide-in-bottom"></div>
+        </div>
+
+        <div class="ui-area">
+            
+            <div class="dialog-box">
+                <p id="dialogText"></p>
+                <span class="dialog-arrow" id="dialogArrow">▼</span>
+            </div>
+
+            <div class="action-menu" id="actionMenu">
+                <button class="menu-btn" id="musicBtn">MUSIC: ON</button>
+                <button class="menu-btn" id="runBtn">RUN</button>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="poke.js"></script>
+</body>
+</html>

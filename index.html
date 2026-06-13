@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter the Poke-Realm</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+    <style>
+        /* Background & Perfect Centering */
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('Main/wallpaperflare.com_wallpaper (1).jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100dvh; 
+            display: flex;
+            
+            /* CHANGED: This tells the page to stack items vertically */
+            flex-direction: column; 
+            
+            justify-content: center;
+            align-items: center;
+            font-family: 'VT323', monospace; 
+            overflow: hidden;
+        }
+
+        /* =========================================
+           TRAINER STAT CARD (Unchanged)
+           ========================================= */
+        .trainer-card {
+            position: absolute;
+            top: 30px; 
+            left: 50%;
+            transform: translateX(-50%); 
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background-color: #3890A8; 
+            padding: 15px 25px;
+            min-width: 280px;
+            border: 4px solid #F8F8F8; 
+            box-shadow: 
+                0 0 0 4px #506858, 
+                inset 0 0 0 4px #506858, 
+                6px 6px 0px rgba(0,0,0,0.5); 
+            border-radius: 8px;
+            z-index: 10; 
+        }
+
+        .trainer-stats {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            gap: 5px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 26px;
+            color: #F8F8F8;
+            text-shadow: 2px 2px 0px #433A35; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .stat-label { color: #F8B010; }
+
+        .trainer-sprite {
+            height: 80px; 
+            image-rendering: pixelated; 
+            filter: drop-shadow(2px 2px 0px #433A35);
+        }
+
+        /* =========================================
+           NEW FEATURE: CENTER GIF
+           ========================================= */
+        .center-gif {
+            /* Dynamic sizing: takes up 35% of screen height but caps at 350px */
+            height: 35vh; 
+            max-height: 350px; 
+            min-height: 180px;
+            
+            /* Pushes the GIF down so it doesn't hide behind the Trainer Card */
+            margin-top: 130px; 
+            margin-bottom: 30px;
+            
+            /* Adds a cool retro shadow to the GIF */
+            filter: drop-shadow(6px 6px 0px rgba(0,0,0,0.5));
+            z-index: 5;
+            
+            /* Keeps pixel art sharp */
+            image-rendering: pixelated; 
+        }
+
+        /* =========================================
+           ENTER BUTTON 
+           ========================================= */
+        .pixel-enter-button {
+            position: relative;
+            padding: 10px 20px; 
+            font-size: 24px;    
+            max-width: 85vw;    
+            white-space: nowrap;
+            cursor: pointer;
+            outline: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background-color: #C788EE; 
+            color: #433A35; 
+            border: 4px solid #433A35; 
+            box-shadow: 4px 4px 0px #000000, -4px -4px 0px #000000;
+            transition: background-color 0.1s ease;
+            
+            /* Removed the old margin-top since flex-direction handles spacing now */
+            margin-top: 0; 
+        }
+
+        .pixel-enter-button::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: calc(100% - 4px);
+            height: calc(100% - 4px);
+            box-shadow: inset 4px 4px 0px #F1D6FF, inset -4px -4px 0px #A961D9;
+        }
+
+        .pixel-enter-button:hover { background-color: #F1D6FF; color: #000000; }
+        .pixel-enter-button:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #000000, -2px -2px 0px #000000;
+        }
+
+        /* =========================================
+           MEDIA QUERIES FOR RESPONSIVENESS
+           ========================================= */
+        @media (min-width: 480px) {
+            .pixel-enter-button { padding: 10px 40px; font-size: 32px; }
+        }
+
+        @media (max-width: 600px) {
+            .trainer-card {
+                top: 15px;
+                padding: 10px 15px;
+                gap: 15px;
+                min-width: 240px;
+                transform: translateX(-50%) scale(0.9); 
+            }
+            .stat-row { font-size: 22px; }
+            .trainer-sprite { height: 90px; }
+            
+            /* Ensures the GIF shrinks and fits on small phone screens */
+            .center-gif {
+                margin-top: 110px;
+                margin-bottom: 20px;
+                height: 25vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="trainer-card">
+        <div class="trainer-stats">
+            <div class="stat-row">
+                <span class="stat-label">NAME</span>
+                <span>NOTCH</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">CLASS</span>
+                <span>CREATOR</span>
+            </div>
+            <div class="stat-row">
+                <span class="stat-label">TIME</span>
+                <span>999:59</span>
+            </div>
+        </div>
+        <img src="Main/kindpng_7766209.png" alt="Trainer Notch" class="trainer-sprite">
+    </div>
+
+    <img src="Main/13940.gif" alt="Center Animation" class="center-gif">
+
+    <button class="pixel-enter-button" id="enterBtn">Click to Enter</button>
+
+    <script>
+        document.getElementById('enterBtn').addEventListener('click', function() {
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+            setTimeout(() => {
+                window.location.href = 'poke.html';
+            }, 250); 
+        });
+    </script>
+
+</body>
+</html>
+
+```
