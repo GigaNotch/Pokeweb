@@ -189,26 +189,14 @@
     <button class="pixel-enter-button" id="enterBtn">Click to Enter</button>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-    
-    // Grab the button
-    const enterButton = document.getElementById('enterBtn');
-    
-    // Only add the listener if the button actually exists on this page
-    if (enterButton) {
-        enterButton.addEventListener('click', function() {
-            // Feature 1: Vibrate if supported
+        document.getElementById('enterBtn').addEventListener('click', function() {
             if (navigator.vibrate) {
                 navigator.vibrate(50);
             }
-            
-            // Feature 2: Redirect after 250ms
             setTimeout(() => {
                 window.location.href = 'poke.html';
             }, 250); 
         });
-    }
-});
     </script>
 
 </body>
